@@ -30,7 +30,7 @@ namespace CustomerService
 
         public async Task<AppUser> GetUserByName(string username)
         {
-            return await _context.appUsers.FindAsync(username);
+            return await _context.appUsers.FirstOrDefaultAsync(x =>x.UserName == username);
         }
         public async Task<AppUser> AddUser(AppUser appUser)
         {

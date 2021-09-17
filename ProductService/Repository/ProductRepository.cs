@@ -25,7 +25,7 @@
 
         public async Task<Product> GetProductByName(string productname)
         {
-            return await _context.products.FindAsync(productname);
+            return await _context.products.FirstOrDefaultAsync(x => x.Name == productname);
         }
 
         public async Task <IEnumerable<Product>> GetProducts()

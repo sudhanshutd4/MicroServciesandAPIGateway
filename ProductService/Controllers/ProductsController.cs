@@ -129,7 +129,8 @@ namespace ProductService.Controllers
             return NoContent();
         }
 
-        [HttpGet("{name}")]
+        [HttpGet]
+        [Route("GetProductByName/{name}")]
         public async Task<ActionResult<Product>> GetProductByName(string name)
         {
             try

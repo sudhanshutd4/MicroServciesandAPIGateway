@@ -24,13 +24,12 @@ namespace CustomerService.Controllers
 
 
         [HttpGet]
-        [Route("GetUsers")]
         public async Task<IEnumerable<AppUser>> GetUsers()
         {
             return await _userRepository.GetUsers();
         }
 
-        [HttpGet("{UserId}")]
+        [HttpGet("{UserId}")]        
         public async Task<ActionResult<AppUser>> GetUser(int UserId)
         {
             try
@@ -51,8 +50,7 @@ namespace CustomerService.Controllers
         }
 
         [HttpPost]
-        [Route("AddUser")]
-        public async Task<ActionResult<AppUser>> AddUser([FromBody]AppUser appUser)
+        public async Task<ActionResult<AppUser>> PostUser([FromBody]AppUser appUser)
         {
             if (appUser == null)
                 return BadRequest();
@@ -62,22 +60,23 @@ namespace CustomerService.Controllers
             return CreatedAtAction("GetUser", new { UserId = appUser.UserId }, appUser);
         }
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteProduct(int id)
+        [HttpDelete("{UserId}")]
+        public async Task<IActionResult> DeleteProduct(int UserId)
         {
-            var userToDelete = await _userRepository.GetUserById(id);
+            var userToDelete = await _userRepository.GetUserById(UserId);
 
             if (userToDelete == null)
             {
-                return NotFound($"User with Id = {id} not found");
+                return NotFound($"User with Id = {UserId} not found");
             }
 
-            _userRepository.DeleteUser(id);
+            _userRepository.DeleteUser(UserId);
             
             return NoContent();
         }
 
-        [HttpGet("{name}")]
+        [HttpGet]
+        [Route("GetUserByName/{name}")]
         public async Task<ActionResult<AppUser>> GetUserByName(string name)
         {
             try
